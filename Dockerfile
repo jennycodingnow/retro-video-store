@@ -29,7 +29,7 @@ RUN pip install -r /app/requirements.txt
 
 # Overwrite files in student fork with upstream files
 ADD test.sh /app
-ADD app/tests /app
+ADD tests /app/tests
 
 # User defined requirements
 # RUN make init
