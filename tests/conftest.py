@@ -1,10 +1,13 @@
 import pytest
 from app import create_app
+from app.db import db
+from flask.signals import request_finished
 from app.models.video import Video
 from app.models.customer import Customer
-from app import db
-from datetime import datetime
-from flask.signals import request_finished
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 VIDEO_TITLE = "A Brand New Video"
 VIDEO_INVENTORY = 1
@@ -16,7 +19,11 @@ CUSTOMER_PHONE = "123-123-1234"
 
 @pytest.fixture
 def app():
-    app = create_app({"TESTING": True})
+    test_config = {
+        "TESTING": True,
+        "SQLALCHEMY_DATABASE_URI": os.environ.get('SQLALCHEMY_TEST_DATABASE_URI')
+    }
+    app = create_app(test_config)
 
     @request_finished.connect_via(app)
     def expire_session(sender, response, **extra):

@@ -180,19 +180,9 @@ Request Body Param | Type | Details
 
 #### Response
 
-Typical success response (these are the minimum required fields that the Postman tests will be looking for):
+`204 No Content`
 
-Status: `200`
-
-```json
-{
-    "id": 2,
-    "name": "Curran Stout",
-    "registered_at": "Wed, 16 Apr 2014 21:40:20 -0700",
-    "postal_code": "94267",
-    "phone": "(908) 949-6758"
-}
-```
+The response should have a mimetype of "application/json" to keep our API response type consistent.
 
 #### Errors & Edge Cases to Check
 
@@ -211,15 +201,9 @@ Arg | Type | Details
 
 #### Response
 
-Typical success response (these are the minimum required fields that the Postman tests will be looking for):
+`204 No Content`
 
-Status: `200`
-
-```json
-{
-    "id": 2
-}
-```
+The response should have a mimetype of "application/json" to keep our API response type consistent.
 
 #### Errors & Edge Cases to Check
 
@@ -344,18 +328,9 @@ Request Body Param | Type | Details
 
 #### Response
 
-Typical success response (this are the minimum required fields that the Postman tests will be looking for):
+`204 No Content`
 
-Status: `200`
-
-```json
-{
-  "id": 1,
-  "title": "Blacksmith Of The Banished",
-  "release_date": "1979-01-18",
-  "total_inventory": 10
-}
-```
+The response should have a mimetype of "application/json" to keep our API response type consistent.
 
 #### Errors & Edge Cases to Check
 
@@ -375,15 +350,9 @@ Arg | Type | Details
 
 #### Response
 
-Typical success response (these are the minimum required fields that the Postman tests will be looking for):
+`204 No Content`
 
-Status: `200`
-
-```json
-{
-    "id": 12
-}
-```
+The response should have a mimetype of "application/json" to keep our API response type consistent.
 
 #### Errors & Edge Cases to Check
 

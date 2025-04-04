@@ -1,4 +1,4 @@
-from operator import contains
+from app.db import db
 from app.models.video import Video
 from app.models.customer import Customer
 
@@ -84,7 +84,8 @@ def test_create_video(client):
     assert response_body["id"] == VIDEO_ID
     assert response_body["total_inventory"] == VIDEO_INVENTORY
 
-    new_video = Video.query.get(1)
+    query = db.select(Video).where(Video.id == 1)
+    new_video = db.session.scalar(query)
 
     assert new_video
     assert new_video.title == VIDEO_TITLE
@@ -101,7 +102,7 @@ def test_create_video_must_contain_title(client):
     assert "details" in response_body
     assert "Request body must include title." in response_body["details"]
     assert response.status_code == 400
-    assert Video.query.all() == []
+    assert db.session.scalars(db.select(Video)).all() == []
 
 def test_create_video_must_contain_release_date(client):
     # Act
@@ -115,7 +116,7 @@ def test_create_video_must_contain_release_date(client):
     assert "details" in response_body
     assert "Request body must include release_date." in response_body["details"]
     assert response.status_code == 400
-    assert Video.query.all() == []
+    assert db.session.scalars(db.select(Video)).all() == []
 
 def test_create_video_must_contain_inventory(client):
     # Act
@@ -128,19 +129,18 @@ def test_create_video_must_contain_inventory(client):
     assert "details" in response_body
     assert "Request body must include total_inventory." in response_body["details"]
     assert response.status_code == 400
-    assert Video.query.all() == []
+    assert db.session.scalars(db.select(Video)).all() == []
 
 # DELETE
 def test_delete_video(client, one_video):
-    # Act
+    # Arrange & Act
     response = client.delete("/videos/1")
-    response_body = response.get_json()
-    print("********", response)
-
+    
     # Assert
-    assert response_body["id"] == 1
-    assert response.status_code == 200
-    assert Video.query.get(1) == None
+    assert response.status_code == 204
+
+    query = db.select(Video).where(Video.id == 1)
+    assert db.session.scalar(query) == None
 
 def test_delete_video_not_found(client):
     # Act
@@ -150,7 +150,7 @@ def test_delete_video_not_found(client):
     # Assert
     assert response_body == {"message": "Video 1 was not found"}
     assert response.status_code == 404
-    assert Video.query.all() == []
+    assert db.session.scalars(db.select(Video)).all() == []
 
 def test_update_video(client, one_video):
     # Act
@@ -162,11 +162,10 @@ def test_update_video(client, one_video):
     response_body = response.get_json()
 
     # Assert
-    assert response.status_code == 200
-    assert response_body["title"] == "Updated Video Title"
-    assert response_body["total_inventory"] == 2
+    assert response.status_code == 204
 
-    video = Video.query.get(1)
+    query = db.select(Video).where(Video.id == 1)
+    video = db.session.scalar(query)
 
     assert video.title == "Updated Video Title"
     assert video.total_inventory == 2
@@ -265,7 +264,8 @@ def test_create_customer(client):
     assert response.status_code == 201
     assert response_body["id"] == CUSTOMER_ID
 
-    new_customer = Customer.query.get(1)
+    query = db.select(Customer).where(Customer.id == 1)
+    new_customer = db.session.scalar(query)
 
     assert new_customer
     assert new_customer.name == CUSTOMER_NAME
@@ -284,7 +284,7 @@ def test_create_customer_must_contain_postal(client):
     assert "details" in response_body
     assert "Request body must include postal_code." in response_body["details"]
     assert response.status_code == 400
-    assert Customer.query.all() == []
+    assert db.session.scalars(db.select(Customer)).all() == []
 
 def test_create_customer_must_contain_name(client):
     # Act
@@ -298,7 +298,7 @@ def test_create_customer_must_contain_name(client):
     assert "details" in response_body
     assert "Request body must include name." in response_body["details"]
     assert response.status_code == 400
-    assert Customer.query.all() == []
+    assert db.session.scalars(db.select(Customer)).all() == []
 
 def test_create_customer_must_contain_phone(client):
     # Act
@@ -311,18 +311,18 @@ def test_create_customer_must_contain_phone(client):
     assert "details" in response_body
     assert "Request body must include phone." in response_body["details"]
     assert response.status_code == 400
-    assert Customer.query.all() == []
+    assert db.session.scalars(db.select(Customer)).all() == []
 
 # DELETE
 def test_delete_customer(client, one_customer):
     # Act
     response = client.delete("/customers/1")
-    response_body = response.get_json()
-
+    
     # Assert
-    assert response_body["id"] == 1
-    assert response.status_code == 200
-    assert Customer.query.get(1) == None
+    assert response.status_code == 204
+
+    query = db.select(Customer).where(Customer.id == 1)
+    assert db.session.scalar(query) == None
 
 def test_delete_customer_not_found(client):
     # Act
@@ -332,7 +332,7 @@ def test_delete_customer_not_found(client):
     # Assert
     assert response_body == {"message": "Customer 1 was not found"}
     assert response.status_code == 404
-    assert Customer.query.all() == []
+    assert db.session.scalars(db.select(Customer)).all() == []
 
 def test_update_customer(client, one_customer):
     # Act
@@ -341,15 +341,13 @@ def test_update_customer(client, one_customer):
         "phone": f"Updated ${CUSTOMER_PHONE}",
         "postal_code": f"Updated ${CUSTOMER_POSTAL_CODE}"
     })
-    response_body = response.get_json()
 
     # Assert
-    assert response.status_code == 200
-    assert response_body["name"] == f"Updated ${CUSTOMER_NAME}"
-    assert response_body["phone"] == f"Updated ${CUSTOMER_PHONE}"
-    assert response_body["postal_code"] == f"Updated ${CUSTOMER_POSTAL_CODE}"
+    assert response.status_code == 204
 
-    customer = Customer.query.get(1)
+    query = db.select(Customer).where(Customer.id == 1)
+    customer = db.session.scalar(query)
+
     assert customer.name == f"Updated ${CUSTOMER_NAME}"
     assert customer.phone == f"Updated ${CUSTOMER_PHONE}"
     assert customer.postal_code == f"Updated ${CUSTOMER_POSTAL_CODE}"
