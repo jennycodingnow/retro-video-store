@@ -29,7 +29,7 @@ The full functionality is spelled out further in the "Project Directions" files 
 - Listing videos checked out to a customer, custom endpoint
 - Listing customers who have checked out a video, custom endpoint
 - Listing customer rental history, custom endpoint
-- Adding sorting and pagination with query parameters for listing customerss, customers who have checked out a video, and videos checked out to a customer
+- Adding sorting and pagination with query parameters for listing all customers, customers who have checked out a video, and videos checked out to a customer
 
 ## How to Complete and Submit
 

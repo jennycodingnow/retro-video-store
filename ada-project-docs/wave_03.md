@@ -9,7 +9,7 @@ The following 3 query parameters:
 | `count`       | integer | Number of responses to return per page
 | `page_num`    | integer | Page of responses to return
 
-should be accepted by the following three endpoints:
+should be accepted by the following two endpoints:
 - `GET /customers`
 - `GET /customers/<id>/rentals`
 
@@ -26,7 +26,7 @@ Things to note:
   - Videos can be sorted by `title` and `release_date`
 - If the client requests both sorting and pagination, pagination should be relative to the sorted order
 - Check out the [paginate method](https://flask-sqlalchemy.palletsprojects.com/en/2.x/api/#flask_sqlalchemy.BaseQuery.paginate)
-  - The paginate method reteurns a [Pagination object](https://flask-sqlalchemy.palletsprojects.com/en/2.x/api/#flask_sqlalchemy.Pagination)
+  - The paginate method returns a [Pagination object](https://flask-sqlalchemy.palletsprojects.com/en/2.x/api/#flask_sqlalchemy.Pagination)
   - To access records from a Pagination object, consider using the `items` attribute
   - See [this article from DigitalOcean](https://www.digitalocean.com/community/tutorials/how-to-query-tables-and-paginate-data-in-flask-sqlalchemy) for a more detailed look at paginating data using SQLAlchemy 
 

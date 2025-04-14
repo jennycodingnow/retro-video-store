@@ -27,7 +27,6 @@ Fields to return:
 - `title`
 - `checkout_date`
 - `due_date`
-- 
 ####  `GET /videos/<id>/history`
 List customers that have checked out a copy of the video _in the past_
 
@@ -60,9 +59,9 @@ should additionally be accepted by the following three endpoints:
 
 So, for an API endpoint like `GET /videos`, the following requests should be valid:
 - `GET /videos`: All videos, sorted by ID
-- `GET /videos?sort=name`: All customers, sorted by name
-- `GET /videos?count=10&page_num=2`: Customers 11-20, sorted by ID
-- `GET /videos?sort=name&count=10&page_num=2`: Customers 11-20, sorted by name
+- `GET /videos?sort=name`: All videos, sorted by name
+- `GET /videos?count=10&page_num=2`: Videos 11-20, sorted by ID
+- `GET /videos?sort=name&count=10&page_num=2`: Videos 11-20, sorted by name
 
 Add your own Wave 04 tests to verify functionality.
 
