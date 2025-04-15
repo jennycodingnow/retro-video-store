@@ -126,8 +126,7 @@ def test_checkin_video_not_checked_out(client, one_video, one_customer):
     response_body = response.get_json()
 
     assert response.status_code == 400
-    assert response_body == {"message": "No outstanding rentals for customer 1 and video 1"}
-    
+    assert response_body == {"message": "No outstanding rentals for customer 1 and video 1"}    
 
 def test_rentals_by_video(client, one_checked_out_video):
     response = client.get("/videos/1/rentals")
@@ -184,14 +183,14 @@ def test_can_delete_customer_with_rental(client, one_checked_out_video):
     response = client.delete("/customers/1")
 
     #Assert
-    assert response.status_code == 200
+    assert response.status_code == 204
 
 def test_can_delete_video_with_rental(client, one_checked_out_video):
     # Act
     response = client.delete("/videos/1")
 
     #Assert
-    assert response.status_code == 200
+    assert response.status_code == 204
 
 def test_cant_checkout_video_twice(client, one_checked_out_video):
     # Act
@@ -202,7 +201,6 @@ def test_cant_checkout_video_twice(client, one_checked_out_video):
 
     # Assert 
     assert response.status_code == 400
-
 
 def test_cant_checkin_video_twice(client, one_checked_out_video):
     # Act
