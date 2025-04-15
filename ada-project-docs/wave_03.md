@@ -9,11 +9,9 @@ The following 3 query parameters:
 | `count`       | integer | Number of responses to return per page
 | `page_num`    | integer | Page of responses to return
 
-should be accepted by the following two endpoints:
-- `GET /customers`
-- `GET /customers/<id>/rentals`
+should be accepted by the `GET /customers` endpoint.
 
-So, for an API endpoint like `GET /customers`, the following requests should be valid:
+For the API endpoint `GET /customers`, the following requests should be valid:
 - `GET /customers`: All customers, sorted by ID
 - `GET /customers?sort=name`: All customers, sorted by name
 - `GET /customers?count=10&page_num=2`: Customers 11-20, sorted by ID
